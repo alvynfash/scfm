@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/route_manager.dart';
 import 'package:scfm/screens/app.dart';
-import 'package:scfm/screens/create_account_screen.dart';
 
 const baseUrl =
     'https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations';
@@ -81,12 +81,7 @@ class _StartUpScreenState extends State<StartUpScreen> {
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: FlatButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => CreateAccountScreen(),
-              ),
-            ),
+            onPressed: () => Get.toNamed('createAccountScreen'),
             color: ScfmApp.blueTheme,
             textColor: Colors.white,
             shape: RoundedRectangleBorder(

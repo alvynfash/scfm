@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:scfm/screens/app.dart';
-import 'package:scfm/screens/home_screen.dart';
 
 class BiometricConfirmationScreen extends StatefulWidget {
   BiometricConfirmationScreen({Key key}) : super(key: key);
@@ -75,7 +74,7 @@ class _BiometricConfirmationScreenState
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: FlatButton(
-            onPressed: () => Get.offAll(HomeScreen()),
+            onPressed: () => Get.offAllNamed('homeScreen'),
             textColor: Colors.white,
             color: ScfmApp.blueTheme,
             shape: RoundedRectangleBorder(
@@ -93,7 +92,7 @@ class _BiometricConfirmationScreenState
           ),
         ),
         GestureDetector(
-          onTap: () => print('No thanks tapped'),
+          onTap: () => Get.offAllNamed('homeScreen'),
           child: Container(
             padding: const EdgeInsets.all(16),
             color: Colors.transparent,

@@ -10,7 +10,7 @@ class ScfmApp extends StatefulWidget {
   static Color greyTheme = Color(0xff8193A4);
   static Color bgTheme = Color(0xffF5F6FA);
 
-  static BoxDecoration ddefaultBoxDecoration = BoxDecoration(
+  static BoxDecoration defaultThemedBoxDecoration = BoxDecoration(
     gradient: LinearGradient(
       colors: [
         ScfmApp.greenTheme,
@@ -18,6 +18,24 @@ class ScfmApp extends StatefulWidget {
       ],
       begin: Alignment.topRight,
       end: Alignment.bottomLeft,
+    ),
+  );
+
+  static BoxDecoration defaultRoundedBoxDecoration = BoxDecoration(
+    borderRadius: BorderRadius.circular(15),
+  );
+
+  static BoxDecoration defaultRoundedBottomBoxDecoration = BoxDecoration(
+    borderRadius: BorderRadius.only(
+      bottomLeft: Radius.circular(15),
+      bottomRight: Radius.circular(15),
+    ),
+  );
+
+  static BoxDecoration defaultRoundedTopBoxDecoration = BoxDecoration(
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(15),
+      topRight: Radius.circular(15),
     ),
   );
 
@@ -31,49 +49,25 @@ class ScfmApp extends StatefulWidget {
 
 class _ScfmAppState extends State<ScfmApp> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.latoTextTheme(
           Theme.of(context).textTheme,
         ),
       ),
       home: StartUpScreen(),
-      unknownRoute: GetPage(
-        name: 'unknown',
-        page: () => UnkownScreen(),
-        transition: Transition.downToUp,
-      ),
+      defaultTransition: Transition.topLevel,
       getPages: [
+        GetPage(name: 'splashScreen', page: () => SplashScreen()),
+        GetPage(name: 'startupScreen', page: () => StartUpScreen()),
+        GetPage(name: 'createAccountScreen', page: () => CreateAccountScreen()),
         GetPage(
-          name: 'splashScreen',
-          page: () => SplashScreen(),
-          transition: Transition.downToUp,
-        ),
-        GetPage(
-          name: 'startupScreen',
-          page: () => StartUpScreen(),
-          transition: Transition.downToUp,
-        ),
-        GetPage(
-          name: 'createAccountScreen',
-          page: () => CreateAccountScreen(),
-          transition: Transition.downToUp,
-        ),
-        GetPage(
-          name: 'biometricConfirmationScreen',
-          page: () => BiometricConfirmationScreen(),
-        ),
-        GetPage(
-          name: '/',
-          page: () => HomeScreen(),
-        ),
+            name: 'biometricConfirmationScreen',
+            page: () => BiometricConfirmationScreen()),
+        GetPage(name: 'homeScreen', page: () => HomeScreen()),
+        GetPage(name: 'myAccountsScreen', page: () => MyAccountScreen()),
       ],
     );
   }

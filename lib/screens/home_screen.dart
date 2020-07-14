@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/route_manager.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:scfm/screens/app.dart';
-import 'package:scfm/screens/controls/curved_clipper.dart';
 import 'package:scfm/screens/controls/radial_indicator.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,6 +12,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: _buildAppbar(),
       body: _buildMenus(),
     );
@@ -39,14 +40,17 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 16),
-          child: CircleAvatar(
-            radius: 22.5,
-            backgroundColor: ScfmApp.greyTheme,
-            foregroundColor: Colors.white,
-            child: Text('AF'),
+        IconButton(
+          icon: Icon(
+            Icons.more_vert,
+            color: Colors.white,
           ),
+          onPressed: () {
+            Get.bottomSheet(
+              _buildMoreOptions(),
+              backgroundColor: Colors.white,
+            );
+          },
         ),
       ],
       centerTitle: false,
@@ -67,7 +71,6 @@ class HomeScreen extends StatelessWidget {
         children: [
           Container(
             child: Column(
-              // shrinkWrap: true,
               children: [
                 _buildAccountCard(),
                 _buildActivities(),
@@ -85,7 +88,6 @@ class HomeScreen extends StatelessWidget {
     return Card(
       shape: ScfmApp.defaultRoundedBorder,
       child: Container(
-        // height: 80,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: _buildAmountsOverview(),
@@ -100,12 +102,12 @@ class HomeScreen extends StatelessWidget {
       children: [
         _amountTile(
           title: 'Invested',
-          amount: 1460.93,
+          amount: 1000,
           iconColor: Colors.redAccent,
         ),
         _amountTile(
-          title: 'Returns',
-          amount: 3890,
+          title: 'Earned',
+          amount: 238,
           iconColor: ScfmApp.greenTheme,
         ),
       ],
@@ -123,9 +125,16 @@ class HomeScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              _activityTile(
+                text: 'Payouts',
+                icon: Icons.show_chart,
+              ),
+              _activityTile(
+                text: 'Accounts',
+                icon: Icons.account_balance_wallet,
+                onTap: () => Get.toNamed('myAccountsScreen'),
+              ),
               _buildPayoutActivityTile(),
-              _activityTile(text: 'My Account', icon: Icons.account_balance),
-              _activityTile(text: 'Insight', icon: Icons.send),
             ],
           ),
         ),
@@ -234,15 +243,15 @@ class HomeScreen extends StatelessWidget {
             children: [
               Container(
                 child: RadialIndicator(
+                  bgColor: ScfmApp.lightBlueTheme,
                   progressColor: ScfmApp.greenTheme,
-                  bgColor: Colors.grey,
-                  percent: 8 / 32,
-                  text: '8',
+                  percent: 1 / 5,
+                  text: '1',
                   radius: 50,
                 ),
               ),
               Text(
-                'Payouts',
+                'Active Crew',
                 style: TextStyle(
                   fontSize: 13,
                   color: ScfmApp.greyTheme,
@@ -365,6 +374,67 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildMoreOptions() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(8, 8, 8, 32),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: Icon(
+              Icons.notifications_active,
+              color: ScfmApp.greenTheme,
+            ),
+            title: Text('Enable notifications'),
+            trailing: Switch.adaptive(
+              onChanged: (bool value) {},
+              value: true,
+              activeColor: ScfmApp.greenTheme,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Divider(),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.lock,
+              color: ScfmApp.greenTheme,
+            ),
+            title: Text('Log in with biometirc'),
+            trailing: Switch.adaptive(
+              onChanged: (bool value) {},
+              value: true,
+              activeColor: ScfmApp.greenTheme,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Divider(),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.email,
+              color: ScfmApp.greenTheme,
+            ),
+            title: Text('Alerts'),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Divider(),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.chat_bubble,
+              color: ScfmApp.greenTheme,
+            ),
+            title: Text('Chat with an agent'),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 Widget _headerTile(String text) {
@@ -380,43 +450,47 @@ Widget _headerTile(String text) {
   );
 }
 
-Widget _activityTile({String text, IconData icon = Icons.android}) {
-  return Card(
-    shape: ScfmApp.defaultRoundedBorder,
-    child: Container(
-      width: 100,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 12, top: 12),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              child: Icon(
-                icon,
-                color: Colors.white,
-              ),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    ScfmApp.greenTheme,
-                    ScfmApp.lightBlueTheme,
-                  ],
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
+Widget _activityTile(
+    {String text, IconData icon = Icons.android, Function onTap}) {
+  return GestureDetector(
+    onTap: () => onTap?.call(),
+    child: Card(
+      shape: ScfmApp.defaultRoundedBorder,
+      child: Container(
+        width: 100,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 12, top: 12),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                child: Icon(
+                  icon,
+                  color: Colors.white,
                 ),
-                borderRadius: BorderRadius.circular(15),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      ScfmApp.greenTheme,
+                      ScfmApp.lightBlueTheme,
+                    ],
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                height: 50,
+                width: 50,
               ),
-              height: 50,
-              width: 50,
-            ),
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: 13,
-                color: ScfmApp.greyTheme,
+              Text(
+                text,
+                style: TextStyle(
+                  fontSize: 13,
+                  color: ScfmApp.greyTheme,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     ),
@@ -447,9 +521,17 @@ Widget _amountTile({
             style: TextStyle(fontSize: 13, color: ScfmApp.greyTheme),
           ),
           SizedBox(height: 4),
-          Text(
-            '${amount.toStringAsFixed(2)}',
-            style: TextStyle(fontSize: 20),
+          Text.rich(
+            TextSpan(children: [
+              TextSpan(
+                text: '£${amount.toString().split(".").first}',
+                style: TextStyle(fontSize: 20),
+              ),
+              TextSpan(
+                text: '.${amount.toStringAsFixed(2).split(".").last}',
+                style: TextStyle(fontSize: 14),
+              ),
+            ]),
           ),
         ],
       ),
