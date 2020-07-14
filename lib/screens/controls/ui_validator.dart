@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scfm/main.dart';
+import 'package:scfm/screens/app.dart';
 
 class UiValidator extends StatefulWidget {
   final String text;

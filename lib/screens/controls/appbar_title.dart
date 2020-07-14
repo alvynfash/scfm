@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scfm/main.dart';
+import 'package:scfm/screens/app.dart';
 
 class AppBarTitle extends StatefulWidget {
   AppBarTitle({Key key}) : super(key: key);

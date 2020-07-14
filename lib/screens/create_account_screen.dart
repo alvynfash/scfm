@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:scfm/main.dart';
-import 'package:scfm/screens/biometric_confirmation_screen.dart';
+import 'package:get/route_manager.dart';
+import 'package:scfm/screens/app.dart';
 import 'package:scfm/screens/controls/appbar_title.dart';
 
 import 'controls/ui_validator.dart';
@@ -154,13 +154,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             return;
           }
           if (_formIndex == _maxFormScreens - 1) {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (_) => BiometricConfirmationScreen(),
-              ),
-              ModalRoute.withName('biometrics'),
-            );
+            Get.offAllNamed('biometricConfirmationScreen');
             return;
           }
         },

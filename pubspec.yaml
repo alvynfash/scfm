@@ -30,6 +30,9 @@ dependencies:
   google_fonts: ^1.1.0
   percent_indicator: ^2.1.5
   flutter_svg: ^0.18.0
+  flutter_spinkit: "^4.1.2"
+  gradient_app_bar:
+  get:
 
 dev_dependencies:
   flutter_test:

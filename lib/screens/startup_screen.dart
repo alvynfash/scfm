@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:scfm/main.dart';
+import 'package:scfm/screens/app.dart';
 import 'package:scfm/screens/create_account_screen.dart';
 
 const baseUrl =

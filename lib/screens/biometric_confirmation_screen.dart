@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:scfm/main.dart';
+import 'package:get/route_manager.dart';
+import 'package:scfm/screens/app.dart';
 import 'package:scfm/screens/home_screen.dart';
 
 class BiometricConfirmationScreen extends StatefulWidget {
@@ -74,13 +75,7 @@ class _BiometricConfirmationScreenState
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 16),
           child: FlatButton(
-            onPressed: () => Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (_) => HomeScreen(),
-              ),
-              ModalRoute.withName('home'),
-            ),
+            onPressed: () => Get.offAll(HomeScreen()),
             textColor: Colors.white,
             color: ScfmApp.blueTheme,
             shape: RoundedRectangleBorder(
